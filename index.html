@@ -64,10 +64,75 @@
 <h2>MAP</h2>
 <h3>MAP计算</h3>
 <p><code>MAP</code>全称Mean Average Precision，表示平均正确率。其中<code>AP</code>的计算方法如下：
-$$AveP=\frac{\sum_{k=1}^{n}(P(k) \times rel(k))}{相关文档数量}$$
-其中，$$$k$$$为检索结果队列中的排序位置，$$$P(k)$$$为前$$$k$$$个结果的准确率，即$$$P(k)=\frac{相关文档数量}{总文档数量}$$$，$$$rel(k)$$$表示位置$$$k$$$的文档是否相关，相关为1，不相关为0。</p>
+</p>
+<div class="math">$$AveP=\frac{\sum\_{k=1}^{n}(P(k) \times rel(k))}{相关文档数量}$$</div>
+<p>
+其中，</p>
+<div class="math">$$$k$$</div>
+<p><span class="math">\(为检索结果队列中的排序位置，<div class="math">$$$P(k)$$</div>\)</span>为前</p>
+<div class="math">$$$k$$</div>
+<p><span class="math">\(个结果的准确率，即<div class="math">$$$P(k)=\frac{相关文档数量}{总文档数量}$$</div>\)</span>，</p>
+<div class="math">$$$rel(k)$$</div>
+<p><span class="math">\(表示位置<div class="math">$$$k$$</div>\)</span>的文档是否相关，相关为1，不相关为0。</p>
 <p>MAP即是将多个query对应的AP求平均。
-$$MAP=\frac{\sum_{q=1 ...</p> </div><!-- /.entry-content -->
+</p>
+<div class="math">$$MAP=\frac{\sum\_{q=1}^{Q} AveP(q)}{Q}$$ ...</div><script type='text/javascript'>if (!document.getElementById('mathjaxscript_pelican_#%@#$@#')) {
+    var align = "center",
+        indent = "0em",
+        linebreak = "false";
+
+    if (false) {
+        align = (screen.width < 768) ? "left" : align;
+        indent = (screen.width < 768) ? "0em" : indent;
+        linebreak = (screen.width < 768) ? 'true' : linebreak;
+    }
+
+    var mathjaxscript = document.createElement('script');
+    var location_protocol = (false) ? 'https' : document.location.protocol;
+    if (location_protocol !== 'http' && location_protocol !== 'https') location_protocol = 'https:';
+    mathjaxscript.id = 'mathjaxscript_pelican_#%@#$@#';
+    mathjaxscript.type = 'text/javascript';
+    mathjaxscript.src = location_protocol + '//cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML';
+    mathjaxscript[(window.opera ? "innerHTML" : "text")] =
+        "MathJax.Hub.Config({" +
+        "    config: ['MMLorHTML.js']," +
+        "    TeX: { extensions: ['AMSmath.js','AMSsymbols.js','noErrors.js','noUndefined.js'], equationNumbers: { autoNumber: 'AMS' } }," +
+        "    jax: ['input/TeX','input/MathML','output/HTML-CSS']," +
+        "    extensions: ['tex2jax.js','mml2jax.js','MathMenu.js','MathZoom.js']," +
+        "    displayAlign: '"+ align +"'," +
+        "    displayIndent: '"+ indent +"'," +
+        "    showMathMenu: true," +
+        "    messageStyle: 'normal'," +
+        "    tex2jax: { " +
+        "        inlineMath: [ ['\\\\(','\\\\)'] ], " +
+        "        displayMath: [ ['$$','$$'] ]," +
+        "        processEscapes: true," +
+        "        preview: 'TeX'," +
+        "    }, " +
+        "    'HTML-CSS': { " +
+        "        styles: { '.MathJax_Display, .MathJax .mo, .MathJax .mi, .MathJax .mn': {color: 'inherit ! important'} }," +
+        "        linebreaks: { automatic: "+ linebreak +", width: '90% container' }," +
+        "    }, " +
+        "}); " +
+        "if ('default' !== 'default') {" +
+            "MathJax.Hub.Register.StartupHook('HTML-CSS Jax Ready',function () {" +
+                "var VARIANT = MathJax.OutputJax['HTML-CSS'].FONTDATA.VARIANT;" +
+                "VARIANT['normal'].fonts.unshift('MathJax_default');" +
+                "VARIANT['bold'].fonts.unshift('MathJax_default-bold');" +
+                "VARIANT['italic'].fonts.unshift('MathJax_default-italic');" +
+                "VARIANT['-tex-mathit'].fonts.unshift('MathJax_default-italic');" +
+            "});" +
+            "MathJax.Hub.Register.StartupHook('SVG Jax Ready',function () {" +
+                "var VARIANT = MathJax.OutputJax.SVG.FONTDATA.VARIANT;" +
+                "VARIANT['normal'].fonts.unshift('MathJax_default');" +
+                "VARIANT['bold'].fonts.unshift('MathJax_default-bold');" +
+                "VARIANT['italic'].fonts.unshift('MathJax_default-italic');" +
+                "VARIANT['-tex-mathit'].fonts.unshift('MathJax_default-italic');" +
+            "});" +
+        "}";
+    (document.body || document.getElementsByTagName('head')[0]).appendChild(mathjaxscript);
+}
+</script> </div><!-- /.entry-content -->
 
                                 <div class="medium primary btn"><a href="/xin-xi-jian-suo-zhong-de-ping-jie-zhi-biao-maphe-ndcg.html" rel="bookmark" title="Permalink to 信息检索中的评价指标MAP和NDCG">Read more <i class="icon-arrow-right"></i></a></div>
 

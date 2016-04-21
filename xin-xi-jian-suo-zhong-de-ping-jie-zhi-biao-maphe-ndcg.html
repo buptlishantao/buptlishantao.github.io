@@ -68,10 +68,20 @@
 <h2>MAP</h2>
 <h3>MAP计算</h3>
 <p><code>MAP</code>全称Mean Average Precision，表示平均正确率。其中<code>AP</code>的计算方法如下：
-$$AveP=\frac{\sum_{k=1}^{n}(P(k) \times rel(k))}{相关文档数量}$$
-其中，$$$k$$$为检索结果队列中的排序位置，$$$P(k)$$$为前$$$k$$$个结果的准确率，即$$$P(k)=\frac{相关文档数量}{总文档数量}$$$，$$$rel(k)$$$表示位置$$$k$$$的文档是否相关，相关为1，不相关为0。</p>
+</p>
+<div class="math">$$AveP=\frac{\sum\_{k=1}^{n}(P(k) \times rel(k))}{相关文档数量}$$</div>
+<p>
+其中，</p>
+<div class="math">$$$k$$</div>
+<p><span class="math">\(为检索结果队列中的排序位置，<div class="math">$$$P(k)$$</div>\)</span>为前</p>
+<div class="math">$$$k$$</div>
+<p><span class="math">\(个结果的准确率，即<div class="math">$$$P(k)=\frac{相关文档数量}{总文档数量}$$</div>\)</span>，</p>
+<div class="math">$$$rel(k)$$</div>
+<p><span class="math">\(表示位置<div class="math">$$$k$$</div>\)</span>的文档是否相关，相关为1，不相关为0。</p>
 <p>MAP即是将多个query对应的AP求平均。
-$$MAP=\frac{\sum_{q=1}^{Q} AveP(q)}{Q}$$
+</p>
+<div class="math">$$MAP=\frac{\sum\_{q=1}^{Q} AveP(q)}{Q}$$</div>
+<p>
 Q为query的数量。</p>
 <h3>举例</h3>
 <p>假设有两个主题，主题1有4个相关网页，主题2有5个相关网页。某系统对于主题1检索出4个相关网页，其rank分别为1, 2, 4, 7；对于主题2检索出3个相关网页，其rank分别为1,3,5。对于主题1，平均准确率为(1/1+2/2+3/4+4/7)/4=0.83。对于主题2，平均准确率为(1/1+2/3+3/5+0+0)/5=0.45。则MAP= (0.83+0.45)/2=0.64。” ——<a href="http://www.cnblogs.com/ywl925/archive/2013/08/16/3262209.html">例子来源</a></p>
@@ -89,22 +99,92 @@ DCG originates from an earlier, more primitive, measure called Cumulative Gain.<
 </blockquote>
 <h3>NDCG计算</h3>
 <p>先说CG（Cumulative Gain，累计增益），
-$$CG_{p} = \sum_{i=1}^{p}rel_i$$
-其中，$$$p$$$为文档在搜索结果列表中的排序位置，$$$rel_i$$$为处在该位置文档的等级相关性（graded relevance）。</p>
+</p>
+<div class="math">$$CG\_{p} = \sum\_{i=1}^{p}rel\_i$$</div>
+<p>
+其中，</p>
+<div class="math">$$$p$$</div>
+<p><span class="math">\(为文档在搜索结果列表中的排序位置，<div class="math">$$$rel\_i$$</div>\)</span>为处在该位置文档的等级相关性（graded relevance）。</p>
 <p>CG的劣势是等级相关性与位置无关，但这样并不合理，将一个相关性更高的结果替换排在前面相关性较弱的结果，应该更佳，但是CG的表现是两者无差异。因此，引入了DCG（Discounted Cumulative Gain）。
-$$DCG_{p}=\sum_{i=1}^{P} \frac{2^{rel_i} - 1}{log_{2}^{i+1}}$$
+</p>
+<div class="math">$$DCG\_{p}=\sum\_{i=1}^{P} \frac{2^{rel\_i} - 1}{log\_{2}^{i+1}}$$</div>
+<p>
 DCG考虑了位置的影响，表示结果位置越靠前的文档，其相关性表现对整体排序质量的影响越大。</p>
 <p>然而，DCG仍有一个缺点，不同query返回的搜索结果数量不同，其DCG的值相差很大，是不可比的。因此，需要对DCG做一定的归一化，于是有了NDCG（Normalized DCG）。
-$$NDCG_p=\frac{DCG_p}{IDCG_p}$$
-其中，$$$IDCG_p$$$为搜索结果按相关性排序之后能得到的最大DCG值。</p>
+</p>
+<div class="math">$$NDCG\_p=\frac{DCG\_p}{IDCG\_p}$$</div>
+<p>
+其中，</p>
+<div class="math">$$$IDCG\_p$$</div>
+<p>$为搜索结果按相关性排序之后能得到的最大DCG值。</p>
 <h3>举例</h3>
 <p><a href="https://en.wikipedia.org/wiki/Discounted_cumulative_gain">维基百科</a>上的例子：
 搜索结果为文档D1,D2,D3,D4,D5,D6，相关性分数分别为3，2，3，0，1，2，则：
-$$CG_6 = 3 + 2 + 3 + 0 + 1 + 2=11$$
-$$DCG_6 = \sum_{i=1}^{6} \frac{rel_i}{log_2^{i+1}}=8.10$$
+</p>
+<div class="math">$$CG\_6 = 3 + 2 + 3 + 0 + 1 + 2=11$$</div>
+<div class="math">$$DCG\_6 = \sum\_{i=1}^{6} \frac{rel\_i}{log\_2^{i+1}}=8.10$$</div>
+<p>
 按相关性排序可以得到最优结果，即最大DCG为文档按照{3，3，2，2，1，0}排序：
-$$IDCG_6=8.69$$ 
-$$NDCG_6 = \frac{DCG_6}{IDCG_6}=0.932$$</p>
+</p>
+<div class="math">$$IDCG\_6=8.69$$</div>
+<div class="math">$$NDCG\_6 = \frac{DCG\_6}{IDCG\_6}=0.932$$</div>
+<script type="text/javascript">if (!document.getElementById('mathjaxscript_pelican_#%@#$@#')) {
+    var align = "center",
+        indent = "0em",
+        linebreak = "false";
+
+    if (false) {
+        align = (screen.width < 768) ? "left" : align;
+        indent = (screen.width < 768) ? "0em" : indent;
+        linebreak = (screen.width < 768) ? 'true' : linebreak;
+    }
+
+    var mathjaxscript = document.createElement('script');
+    var location_protocol = (false) ? 'https' : document.location.protocol;
+    if (location_protocol !== 'http' && location_protocol !== 'https') location_protocol = 'https:';
+    mathjaxscript.id = 'mathjaxscript_pelican_#%@#$@#';
+    mathjaxscript.type = 'text/javascript';
+    mathjaxscript.src = location_protocol + '//cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML';
+    mathjaxscript[(window.opera ? "innerHTML" : "text")] =
+        "MathJax.Hub.Config({" +
+        "    config: ['MMLorHTML.js']," +
+        "    TeX: { extensions: ['AMSmath.js','AMSsymbols.js','noErrors.js','noUndefined.js'], equationNumbers: { autoNumber: 'AMS' } }," +
+        "    jax: ['input/TeX','input/MathML','output/HTML-CSS']," +
+        "    extensions: ['tex2jax.js','mml2jax.js','MathMenu.js','MathZoom.js']," +
+        "    displayAlign: '"+ align +"'," +
+        "    displayIndent: '"+ indent +"'," +
+        "    showMathMenu: true," +
+        "    messageStyle: 'normal'," +
+        "    tex2jax: { " +
+        "        inlineMath: [ ['\\\\(','\\\\)'] ], " +
+        "        displayMath: [ ['$$','$$'] ]," +
+        "        processEscapes: true," +
+        "        preview: 'TeX'," +
+        "    }, " +
+        "    'HTML-CSS': { " +
+        "        styles: { '.MathJax_Display, .MathJax .mo, .MathJax .mi, .MathJax .mn': {color: 'inherit ! important'} }," +
+        "        linebreaks: { automatic: "+ linebreak +", width: '90% container' }," +
+        "    }, " +
+        "}); " +
+        "if ('default' !== 'default') {" +
+            "MathJax.Hub.Register.StartupHook('HTML-CSS Jax Ready',function () {" +
+                "var VARIANT = MathJax.OutputJax['HTML-CSS'].FONTDATA.VARIANT;" +
+                "VARIANT['normal'].fonts.unshift('MathJax_default');" +
+                "VARIANT['bold'].fonts.unshift('MathJax_default-bold');" +
+                "VARIANT['italic'].fonts.unshift('MathJax_default-italic');" +
+                "VARIANT['-tex-mathit'].fonts.unshift('MathJax_default-italic');" +
+            "});" +
+            "MathJax.Hub.Register.StartupHook('SVG Jax Ready',function () {" +
+                "var VARIANT = MathJax.OutputJax.SVG.FONTDATA.VARIANT;" +
+                "VARIANT['normal'].fonts.unshift('MathJax_default');" +
+                "VARIANT['bold'].fonts.unshift('MathJax_default-bold');" +
+                "VARIANT['italic'].fonts.unshift('MathJax_default-italic');" +
+                "VARIANT['-tex-mathit'].fonts.unshift('MathJax_default-italic');" +
+            "});" +
+        "}";
+    (document.body || document.getElementsByTagName('head')[0]).appendChild(mathjaxscript);
+}
+</script>
             </div><!-- /.entry-content -->
 
 
